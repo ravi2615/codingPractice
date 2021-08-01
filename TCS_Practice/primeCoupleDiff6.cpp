@@ -11,20 +11,33 @@ using namespace std;
 #define lli long long int
 ll mod = 1e9 + 7;
 
-vector<long long >isprime(mod , true);
-vector<long long >prime;
-vector<long long >SPF(mod);
+const long long MAX_SIZE = 1000001;
+bool prime[1000000 + 1];
 
+void count_prime()
+{
+int count=0;
+memset(prime, true, sizeof(prime));
+for (int p = 2; p * p <= MAX_SIZE; p++) 
+{
+if (prime[p] == true) 
+ {
+  for (int i = p * 2; i <= MAX_SIZE; i += p)
+  prime[i] = false;
+ }
+}
+}
 void solve()
 {
-    prime();
 
     int n, m, count = 0;
     cin >> n >> m;
     for (int i = n; i <= m - 6; i++)
-        if (prime[i] && prime[i + 6])
+        if (prime[i] && prime[i + 6]){
 
             count++;
+            // cout<<prime[i]<<" "<<prime[i+6];
+            }
     if (count > 0)
         cout << count;
     else
@@ -45,6 +58,7 @@ int main()
     cin >> T;
 
     ll x = 1;
+    count_prime();
     while (x <= T)
     {
         solve();
